@@ -23,4 +23,8 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 ./tmux.sh
 ./video_tools.sh
 ./../vim.sh
+./bash_completions.sh
 ./web_font_tools.sh
+./fonts.sh
+
+brew_cleanup

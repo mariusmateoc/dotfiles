@@ -10,3 +10,4 @@ print_in_purple "\n   Quick Look\n\n"
 
 brew_install "JSON" "quicklook-json" "homebrew/cask" "cask"
 brew_install "Markdown" "qlmarkdown" "homebrew/cask" "cask"
+brew_install "CSV and Excel" "quicklook-csv" "homebrew/cask" "cask"
