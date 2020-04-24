@@ -11,8 +11,31 @@ create_bash_local() {
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+    declare -r CONFIGS="
+#!/bin/bash
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# init z
+# https://github.com/rupa/z
+
+source /usr/local/etc/profile.d/z.sh
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Set PATH for custom functions
+# https://github.com/mariusmateoc/dotfiles/tree/master/src/bin
+
+PATH=\"\$PATH:$HOME/projects/dotfiles/src/bin\"
+
+export PATH
+
+"
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     if [ ! -e "$FILE_PATH" ] || [ -z "$FILE_PATH" ]; then
-        printf "%s\n\n" "#!/bin/bash" >> "$FILE_PATH"
+        printf "%s\n" "$CONFIGS" >> "$FILE_PATH"
     fi
 
     print_result $? "$FILE_PATH"
@@ -35,6 +58,13 @@ create_gitconfig_local() {
 
     # gpgsign = true
 
+[tag]
+
+    # gpgsign = true
+
+[gpg]
+
+    # program = gpg
 
 [user]
 
