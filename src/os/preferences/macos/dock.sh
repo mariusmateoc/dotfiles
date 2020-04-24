@@ -35,7 +35,7 @@ execute "defaults write com.apple.dock mru-spaces -bool false" \
     "Do not automatically rearrange spaces based on most recent use"
 
 execute "defaults write com.apple.dock persistent-apps -array && \
-         defaults write com.apple.dock persistent-others -array " \
+        defaults write com.apple.dock persistent-others -array " \
     "Wipe all app icons"
 
 execute "defaults write com.apple.dock show-process-indicators -bool true" \
@@ -49,5 +49,10 @@ execute "defaults write com.apple.dock showhidden -bool true" \
 
 execute "defaults write com.apple.dock tilesize -int 60" \
     "Set icon size"
+
+execute "defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}' && \
+        defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}' && \
+        defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}'" \
+    "Add spaces to the left side of the Dock (where the applications are)"
 
 killall "Dock" &> /dev/null
