@@ -18,7 +18,7 @@ install_npm_package() {
 
 main() {
 
-    print_in_purple "\n   npm\n\n"
+    print_in_purple "\n   NPM\n\n"
 
     install_npm_package "npm (update)" "npm"
 
