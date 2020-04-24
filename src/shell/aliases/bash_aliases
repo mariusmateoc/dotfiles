@@ -1,8 +1,12 @@
 #!/bin/bash
 
+# Easier navigation: .., ..., ...., ....., ~ and -
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias ~="cd ~" # `cd` is probably faster to type though
+alias -="cd /"
 alias cd..="cd .."
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -12,7 +16,10 @@ alias c="clear"
 alias ch="history -c && > ~/.bash_history"
 alias e="vim --"
 alias g="git"
+alias h="history"
+alias hosts='sudo $EDITOR /etc/hosts'   # yes I occasionally 127.0.0.1 twitter.com ;)
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias j="jobs"
 alias ll="ls -l"
 alias m="man"
 alias map="xargs -n1"
@@ -22,6 +29,30 @@ alias q="exit"
 alias rm="rm -rf --"
 alias t="tmux"
 alias y="yarn"
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Detect which `ls` flavor is in use
+if ls --color > /dev/null 2>&1; then # GNU `ls`
+	colorflag="--color"
+else # OS X `ls`
+	colorflag="-G"
+fi
+
+# List all files colorized in long format
+alias l="ls -l ${colorflag}"
+
+# List all files colorized in long format, including dot files
+alias la="ls -la ${colorflag}"
+
+# List all hidden files colorized in long format
+alias l.="ls -ld .* ${colorflag}"
+
+# List only directories
+alias lsd='ls -lF ${colorflag} | grep "^d"'
+
+# Always use color output for `ls`
+alias ls="command ls ${colorflag}"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

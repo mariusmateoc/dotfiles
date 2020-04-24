@@ -20,10 +20,31 @@ alias brewu="brew update \
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+# `cat` with beautiful colors. requires Pygments installed.
+# sudo easy_install -U Pygments
+
+alias c='pygmentize -O style=monokai -f console256 -g'
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Kill all the tabs in Chrome to free up memory
+# [C] explained: http://www.commandlinefu.com/commands/view/402/exclude-grep-from-your-grepped-output-of-ps-alias-included-in-description
+
+alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | \
+                   grep -v extension-process | tr -s ' ' | cut -d ' ' -f2 | xargs kill"
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 # Clear DNS cache.
 
 alias clear-dns-cache="sudo dscacheutil -flushcache; \
                        sudo killall -HUP mDNSResponder"
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Recursively delete `.DS_Store` files
+
+alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -47,9 +68,25 @@ alias show-desktop-icons="defaults write com.apple.finder CreateDesktop -bool tr
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+# Show/hide hidden files in Finder
+
+alias show-files="defaults write com.apple.finder AppleShowAllFiles -bool true \
+                    && killall Finder"
+
+alias hide-files="defaults write com.apple.finder AppleShowAllFiles -bool false \
+                    && killall Finder"
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 # Get local IP.
 
 alias local-ip="ipconfig getifaddr en1"
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Clean up LaunchServices to remove duplicates in the “Open With” menu
+
+alias lscleanup="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -59,11 +96,36 @@ alias o="open"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+# Reload the shell (i.e. invoke as a login shell)
+
+alias reload="exec $SHELL -l"
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Disable/Enable Spotlight
+
+alias spot-off="sudo mdutil -a -i off"
+
+alias spot-on="sudo mdutil -a -i on"
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Stopwatch
+
+alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 # Update applications and CLTs.
 
-alias u="sudo softwareupdate --install --all \
+alias update="sudo softwareupdate --install --all \
             && brew update \
             && brew upgrade \
             && brew cleanup \
             && npm install -g npm \
             && npm update -g"
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Get week number
+alias week='date +%V'
