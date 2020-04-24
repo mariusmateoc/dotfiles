@@ -36,13 +36,15 @@ export NVM_DIR=\"$NVM_DIRECTORY\"
 
 install_latest_stable_node() {
 
-    # Install the latest stable version of Node
+    # Install the latest Node LTS
     # (this will also set it as the default).
 
     execute \
         ". $LOCAL_SHELL_CONFIG_FILE \
-            && nvm install node" \
-        "nvm (install latest Node)"
+            && nvm install 'lts/*' \
+            && nvm use 'lts/*' \
+            && nvm alias default 'lts/*'" \
+        "nvm (install latest LTS of Node.js )"
 }
 
 install_nvm() {
@@ -72,7 +74,7 @@ update_nvm() {
 
 main() {
 
-    print_in_purple "\n   nvm\n\n"
+    print_in_purple "\n   NVM and latest LTS of Node.js\n\n"
 
     if [ ! -d "$NVM_DIRECTORY" ]; then
         install_nvm
