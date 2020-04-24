@@ -75,19 +75,25 @@ execute "defaults write -g QLPanelAnimationDuration -float 0" \
 execute "defaults write com.apple.systempreferences NSQuitAlwaysKeepsWindows -bool false" \
     "Disable resume system-wide"
 
-execute "sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string 'Laptop' && \
-         sudo scutil --set ComputerName 'laptop' && \
-         sudo scutil --set HostName 'laptop' && \
-         sudo scutil --set LocalHostName 'laptop'" \
+execute "defaults write -g PMPrintingExpandedStateForPrint -bool true" \
+    "Expand print panel by default"
+
+execute "defaults write -g NSDocumentSaveNewDocumentsToCloud -bool false" \
+    "Save to disk (not to iCloud) by default"
+
+execute "sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string 'MacBook' && \
+         sudo scutil --set ComputerName 'MacBook' && \
+         sudo scutil --set HostName 'MacBook' && \
+         sudo scutil --set LocalHostName 'MacBook'" \
     "Set computer name"
 
 execute "sudo systemsetup -setrestartfreeze on" \
     "Restart automatically if the computer freezes"
 
-execute "sudo defaults write /Library/Preferences/com.apple.Bluetooth.plist ControllerPowerState 0 && \
+execute "sudo defaults write /Library/Preferences/com.apple.Bluetooth.plist ControllerPowerState 1 && \
          sudo launchctl unload /System/Library/LaunchDaemons/com.apple.blued.plist && \
          sudo launchctl load /System/Library/LaunchDaemons/com.apple.blued.plist" \
-    "Turn Bluetooth off"
+    "Turn Bluetooth On"
 
 execute "for domain in ~/Library/Preferences/ByHost/com.apple.systemuiserver.*; do
             sudo defaults write \"\${domain}\" dontAutoLoad -array \
