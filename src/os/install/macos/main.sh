@@ -47,6 +47,13 @@ fi
 ./../vim.sh
 ./bash_completions.sh
 ./web_font_tools.sh
-./fonts.sh
+
+ask_for_confirmation "Do you want to install custom fonts?"
+
+if answer_is_yes; then
+
+    ./fonts.sh
+    
+fi
 
 brew_cleanup
