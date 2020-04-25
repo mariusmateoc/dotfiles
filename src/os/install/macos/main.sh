@@ -7,10 +7,6 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 ./xcode.sh
-
-./pyenv.sh
-./pip.sh
-
 ./homebrew.sh
 ./bash.sh
 
@@ -33,6 +29,15 @@ else
 
     ./../nvm.sh
     ./../npm.sh
+
+fi
+
+ask_for_confirmation "Do you want to install pyenv and Latest Python?"
+
+if answer_is_yes; then
+
+    ./../pyenv.sh
+    ./../pip.sh
 
 fi
 
