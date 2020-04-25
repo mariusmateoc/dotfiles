@@ -7,6 +7,10 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 ./xcode.sh
+
+./pyenv.sh
+./pip.sh
+
 ./homebrew.sh
 ./bash.sh
 
