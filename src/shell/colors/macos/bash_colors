@@ -13,9 +13,9 @@
 
 LSCOLORS=""
 
-LSCOLORS+="gx" # Directory
+LSCOLORS+="ex" # Directory
 LSCOLORS+="fx" # Symbolic link
-LSCOLORS+="cx" # Socket
+LSCOLORS+="fx" # Socket
 LSCOLORS+="dx" # Pipe
 LSCOLORS+="cx" # Executable
 LSCOLORS+="eg" # Block special
