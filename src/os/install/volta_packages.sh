@@ -5,11 +5,11 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-install_npm_package() {
+install_package() {
 
     execute \
         ". $HOME/.bash.local \
-            && npm install --global --silent $2" \
+            && volta install $2" \
         "$1"
 
 }
@@ -18,10 +18,10 @@ install_npm_package() {
 
 main() {
 
-    print_in_purple "\n   NPM and Global Packages\n\n"
+    print_in_purple "\n   Node.js and Global Packages\n\n"
 
-    install_npm_package "npm (update)" "npm"
-    install_npm_package "Yarn" "yarn"
+    install_package "Node.js (Latest LTS)" "node"
+    install_package "Yarn" "yarn"
 
 }
 
