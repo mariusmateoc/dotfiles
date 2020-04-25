@@ -29,7 +29,6 @@ source /usr/local/etc/profile.d/z.sh
 PATH=\"\$PATH:$HOME/projects/dotfiles/src/bin\"
 
 export PATH
-
 "
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

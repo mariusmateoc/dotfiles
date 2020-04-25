@@ -28,6 +28,8 @@ change_default_bash() {
     configs="
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+# Homebrew
+
 $pathConfig
 
 export PATH
