@@ -18,7 +18,7 @@ brew_install "Vagrant" "vagrant" "homebrew/cask" "cask"
 brew_install "Wget" "wget"
 
 if [ -d "$HOME/.nvm" ]; then
-    brew_install "Yarn" "yarn"
+    brew_install "Yarn" "yarn" "" "" "--without-node"
 fi
 
 brew_install "z" "z"
