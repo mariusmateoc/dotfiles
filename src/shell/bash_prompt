@@ -91,7 +91,8 @@ get_git_repository_details() {
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    printf "%s" "$1$branchName$tmp"
+    # printf "%s" "$1$branchName$tmp"
+    printf "%s%s" "$1" "$2$branchName$tmp"
 
 }
 
@@ -102,24 +103,29 @@ set_prompts() {
     local bold=$(tput bold 2> /dev/null)
     local reset=$(tput sgr0 2> /dev/null)
 
-    local cyan=""
-    local green=""
+    local magenta=""
     local orange=""
+    local green=""
+    local purple=""
     local white=""
-    local yellow=""
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     if [ "$(tput colors 2> /dev/null || printf "0")" -ge 256 ]; then
 
-        # Solarized colors.
-        # https://github.com/altercation/solarized/tree/master/iterm2-colors-solarized#the-values
+        # Tommorow Night
 
-        cyan=$(tput setaf 37)
-        green=$(tput setaf 64)
-        orange=$(tput setaf 166)
-        white=$(tput setaf 15)
-        yellow=$(tput setaf 136)
+        magenta=$(tput setaf 9)
+        orange=$(tput setaf 172)
+        green=$(tput setaf 190)
+        purple=$(tput setaf 141)
+        white=$(tput setaf 0)
+    else
+        magenta=$(tput setaf 5)
+        orange=$(tput setaf 4)
+        green=$(tput setaf 2)
+        purple=$(tput setaf 1)
+        white=$(tput setaf 7)
 
     fi
 
@@ -136,14 +142,15 @@ set_prompts() {
                             # current working directory)
 
     PS1+="$reset$bold"
-    PS1+="$orange\u"        # Username
-    PS1+="$white@"
-    PS1+="$yellow\h"        # Host
-    PS1+="$white: "
+    PS1+="$magenta\u"       # Username
+    PS1+="$white at "
+    PS1+="$orange\h"        # Host
+    PS1+="$white in "
     PS1+="$green\w"         # Working directory
-    PS1+="\$(get_git_repository_details \"$white on $cyan\")"
+    PS1+="\$(get_git_repository_details \"$white on \" \"$purple\")"
+    PS1+="\[$white\]"
     PS1+="\n"
-    PS1+="\[$reset\]\[$white\]$ \[$reset\]"
+    PS1+="\$ \[$reset\]"
 
     export PS1
 
@@ -152,7 +159,7 @@ set_prompts() {
     # ------------------------------------------------------------------
 
     PS2="⚡ "
-
+    
     export PS2
 
     # ------------------------------------------------------------------
