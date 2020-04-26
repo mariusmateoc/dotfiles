@@ -18,7 +18,8 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 ./misc.sh
 ./misc_tools.sh
 
-ask_for_confirmation "Do you want to use Volta for Node.js and Global Packages?"
+printf "\n"
+ask_for_confirmation "Use Volta for Node.js and Global Packages? (n) will use nvm"
 
 if answer_is_yes; then
     
@@ -32,7 +33,8 @@ else
 
 fi
 
-ask_for_confirmation "Do you want to install pyenv and Latest Python?"
+printf "\n"
+ask_for_confirmation "Install/Update pyenv, pip, pipenv and install Python 3.8.2?"
 
 if answer_is_yes; then
 
@@ -41,8 +43,8 @@ if answer_is_yes; then
 
 fi
 
-
-ask_for_confirmation "Do you want to install rvm and Latest Ruby?"
+printf "\n"
+ask_for_confirmation "Install/Update rvm and install latest Ruby?"
 
 if answer_is_yes; then
 
@@ -57,7 +59,8 @@ fi
 ./bash_completions.sh
 ./web_font_tools.sh
 
-ask_for_confirmation "Do you want to install custom fonts?"
+printf "\n"
+ask_for_confirmation "Install custom fonts?"
 
 if answer_is_yes; then
 

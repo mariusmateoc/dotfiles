@@ -21,12 +21,13 @@ create_bash_local() {
 
 source /usr/local/etc/profile.d/z.sh
 
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 # Set PATH for custom functions
 # https://github.com/mariusmateoc/dotfiles/tree/master/src/bin
 
-PATH=\"\$PATH:$HOME/projects/dotfiles/src/bin\"
+PATH=\"\$PATH:\$HOME/projects/dotfiles/src/bin\"
 
 export PATH
 "

@@ -33,6 +33,7 @@ change_default_bash() {
 $pathConfig
 
 export PATH
+
 "
 
     newShellPath="$brewPrefix/bin/bash" \
