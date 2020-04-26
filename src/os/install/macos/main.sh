@@ -41,6 +41,15 @@ if answer_is_yes; then
 
 fi
 
+
+ask_for_confirmation "Do you want to install rvm and Latest Ruby?"
+
+if answer_is_yes; then
+
+    ./../rvm.sh
+
+fi
+
 ./quick_look.sh
 ./tmux.sh
 ./video_tools.sh
