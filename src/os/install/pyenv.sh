@@ -61,14 +61,6 @@ update_pyenv() {
         "pyenv (update)"
 }
 
-# When running Mojave or higher (10.14+) you will also need to install the additional SDK headers:
-install_additional_sdk_headers() {
-    execute \
-        "sudo installer -pkg /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg -target /" \
-        "Install additional SDK headers for Mojave"
-
-}
-
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -77,7 +69,6 @@ main() {
     print_in_purple "\n   Pyenv, Python and Pip Packages \n\n"
 
     if [ ! -d "$PYENV_DIRECTORY" ]; then
-        # install_additional_sdk_headers
         install_pyenv
         install_latest_python
     else

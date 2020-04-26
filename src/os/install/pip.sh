@@ -21,6 +21,7 @@ main() {
     print_in_purple "\n  Install Pip and Global Packages with Pip\n\n"
 
     install_pip_package "pip (update)" "--upgrade pip"
+    install_pip_package "pipenv (update)" "--upgrade pipenv"
     printf "\n"
     install_pip_package "Pygments" "pygments"
 
