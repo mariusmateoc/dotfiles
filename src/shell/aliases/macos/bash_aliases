@@ -121,9 +121,7 @@ alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date
 alias update="sudo softwareupdate --install --all \
             && brew update \
             && brew upgrade \
-            && brew cleanup \
-            && npm install -g npm \
-            && npm update -g"
+            && brew cleanup"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
