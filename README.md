@@ -68,12 +68,6 @@ Here is a very simple example of a `~/.bash.local` file:
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-# Set local aliases.
-
-alias g="git"
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # Set PATH additions.
 
 PATH="$PATH:$HOME/projects/dotfiles/src/bin"
@@ -98,6 +92,14 @@ such as the `Git` user credentials, e.g.:
     # https://help.github.com/articles/signing-commits-using-gpg/
 
     gpgsign = true
+
+[tag]
+
+    gpgsign = true
+
+[gpg]
+
+    program = gpg
 
 [user]
 
