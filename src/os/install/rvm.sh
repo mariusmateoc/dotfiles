@@ -64,12 +64,12 @@ import_keys() {
 
     # https://rvm.io/rvm/security
     # If you encounter problem with the key server above, try alternatives:
-    # 
+    #
     # hkp://pool.sks-keyservers.net
     # hkp://ipv4.pool.sks-keyservers.net
     # hkp://pgp.mit.edu
     # hkp://keyserver.pgp.com
-    declare -r KEY_SERVER="hkp://pool.sks-keyservers.net"
+    declare -r KEY_SERVER="hkp://ipv4.pool.sks-keyservers.net"
 
     execute \
         "gpg --keyserver $KEY_SERVER --recv-keys $MPAPIS_KEY $PKUCZYNSKI_KEY" \
