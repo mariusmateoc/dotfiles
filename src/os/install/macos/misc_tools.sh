@@ -16,5 +16,3 @@ brew_install "Tree" "tree"
 brew_install "Unrar" "unrar"
 brew_install "Vagrant" "vagrant" "--cask"
 brew_install "Wget" "wget"
-
-brew_install "z" "z"

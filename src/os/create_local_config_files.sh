@@ -16,14 +16,6 @@ create_bash_local() {
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-# init z
-# https://github.com/rupa/z
-
-source /usr/local/etc/profile.d/z.sh
-
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # Set PATH for custom functions
 # https://github.com/mariusmateoc/dotfiles/tree/master/src/bin
 
