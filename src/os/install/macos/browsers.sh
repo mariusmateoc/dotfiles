@@ -12,15 +12,15 @@ print_in_purple "\n   Browsers\n"
 
 printf "\n"
 
-brew_install "Chrome" "google-chrome" "homebrew/cask" "cask"
-brew_install "Chrome Canary" "google-chrome-canary" "homebrew/cask-versions" "cask"
+brew_install "Chrome" "google-chrome" "--cask"
+brew_install "Chrome Canary" "google-chrome-canary" "--cask"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 printf "\n"
 
-brew_install "Firefox" "firefox" "homebrew/cask" "cask"
-brew_install "Firefox Developer" "firefox-developer-edition" "homebrew/cask-versions" "cask"
+brew_install "Firefox" "firefox" "--cask"
+brew_install "Firefox Developer" "firefox-developer-edition" "--cask"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -29,5 +29,5 @@ brew_install "Firefox Developer" "firefox-developer-edition" "homebrew/cask-vers
 
 if is_supported_version "$(get_os_version)" "10.11.4"; then
     printf "\n"
-    brew_install "Safari Technology Preview" "safari-technology-preview" "homebrew/cask-versions" "cask"
+    brew_install "Safari Technology Preview" "safari-technology-preview" "--cask"
 fi
