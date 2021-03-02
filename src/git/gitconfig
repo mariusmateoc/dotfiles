@@ -1,9 +1,9 @@
 [alias]
 
-    a     = commit --amend
+    a     = add
     b     = branch
-    c     = commit -am
-    ca    = !git add -A && git commit                           # Commit all changes.
+    c     = commit
+    ca    = !git add -all && git commit                         # Commit all changes.
     co    = checkout
     cp    = cherry-pick
     d     = diff -- . ':!*package-lock.json' ':!*yarn.lock'
@@ -165,12 +165,38 @@
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+    # Update the content of the last commit by including all
+    # staged changes.
+    #
+    # Note: "Update" is used loosely. Git doesn't actually
+    # update the last commit, but instead, creates a new commit
+    # based on the last commit and replaces it.
+
+    u = commit --amend --no-edit
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    # Update the content of the last commit by including all
+    # local changes.
+
+    ua = !git add --all && git commit --amend --no-edit
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     # Undo last commits (by default it undoes the last commit).
 
     ulc = "!f() { \
         declare n=\"${1:-1}\"; \
         git reset --soft \"HEAD~$n\"; \
     }; f"
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    # Update the content of the last commit by including all
+    # staged changes as well as allow the user to change its
+    # commit message.
+
+    um = commit --amend
 
 [apply]
 
