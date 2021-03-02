@@ -24,12 +24,6 @@ brew_install "Firefox Developer" "firefox-developer-edition" "homebrew/cask-vers
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-printf "\n"
-
-brew_install "Flash" "flash-npapi" "homebrew/cask" "cask"
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # `Safari Technology Preview` requires macOS 10.11.4 or la
 # https://github.com/alrra/dotfiles/issues
 
