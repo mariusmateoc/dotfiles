@@ -114,10 +114,9 @@ set_prompts() {
     if [ "$(tput colors 2> /dev/null || printf "0")" -ge 256 ]; then
 
         # Tommorow Night
-
         magenta=$(tput setaf 9)
         orange=$(tput setaf 172)
-        green=$(tput setaf 190)
+        green=$(tput setaf 148)
         purple=$(tput setaf 141)
         white=$(tput setaf 0)
     else
@@ -159,7 +158,7 @@ set_prompts() {
     # ------------------------------------------------------------------
 
     PS2="⚡ "
-    
+
     export PS2
 
     # ------------------------------------------------------------------
