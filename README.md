@@ -1,8 +1,6 @@
 [Marius Mateoc][repo]’s Dotfiles
 ==========================
 
-[![Build Status][ci badge]][ci link]
-
 These are the base dotfiles that I start with when I set up a new
 environment. For more specific local needs I use the `*.local` files
 described in the [`Local Settings`](#local-settings) section.
@@ -10,15 +8,18 @@ described in the [`Local Settings`](#local-settings) section.
 Table of Contents
 -----------------
 
-* [Setup](#setup)
-* [Customize](#customize)
-  * [Forks](#forks)
-  * [Local Settings](#local-settings)
-    * [`~/.bash.local`](#bashlocal)
-    * [`~/.gitconfig.local`](#gitconfiglocal)
-    * [`~/.vimrc.local`](#vimrclocal)
-* [Update](#update)
-* [License](#license)
+- [Marius Mateoc’s Dotfiles](#marius-mateocs-dotfiles)
+  - [Table of Contents](#table-of-contents)
+  - [Setup](#setup)
+  - [Customize](#customize)
+    - [Local Settings](#local-settings)
+      - [`~/.bash.local`](#bashlocal)
+      - [`~/.gitconfig.local`](#gitconfiglocal)
+    - [Installing Custom Fonts MACOS](#installing-custom-fonts-macos)
+      - [`~/.vimrc.local`](#vimrclocal)
+    - [Forks](#forks)
+  - [Update](#update)
+  - [License](#license)
 
 Setup
 -----
@@ -33,19 +34,18 @@ To set up the `dotfiles` run the appropriate snippet in the terminal:
 | `macOS` | `bash -c "$(curl -LsS https://raw.github.com/mariusmateoc/dotfiles/master/src/os/setup.sh)"` |
 | `Ubuntu` | `bash -c "$(wget -qO - https://raw.github.com/mariusmateoc/dotfiles/master/src/os/setup.sh)"` |
 
-
 The setup process will:
 
-* Download the dotfiles on your computer
+- Download the dotfiles on your computer
   (by default it will suggest `~/projects/dotfiles`).
-* Create some additional [directories][dirs].
-* [Symlink][symlink] the [`git`][git], [`shell`][shell],
+- Create some additional [directories][dirs].
+- [Symlink][symlink] the [`git`][git], [`shell`][shell],
   and [`vim`][vim] files.
-* Install applications / command-line tools for
+- Install applications / command-line tools for
   [`macOS`][install macos] / [`Ubuntu`][install ubuntu].
-* Set custom [`macOS`][preferences macos] /
+- Set custom [`macOS`][preferences macos] /
   [`Ubuntu`][preferences ubuntu] preferences.
-* Install [`vim` plugins][vim plugins].
+- Install [`vim` plugins][vim plugins].
 
 Customize
 ---------
@@ -108,6 +108,15 @@ such as the `Git` user credentials, e.g.:
     signingkey = XXXXXXXX
 ```
 
+### Installing Custom Fonts MACOS
+
+If you want to install custom fonts you need to run the following
+command from `dotfiles` folder:
+
+```bash
+sh ./src/os/install/macos/fonts.sh
+```
+
 #### `~/.vimrc.local`
 
 The `~/.vimrc.local` file will be automatically sourced after
@@ -127,16 +136,12 @@ To update the dotfiles you can either run the [`setup` script][setup]
 or, if you want to update one particular part, run the appropriate
 [`os` script](src/os).
 
-
 License
 -------
 
 The code is available under the [MIT license][license].
 
 <!-- Link labels: -->
-
-[ci badge]: https://github.com/mariusmateoc/dotfiles/workflows/test/badge.svg
-[ci link]: https://github.com/mariusmateoc/dotfiles/actions
 [dirs]: src/os/create_directories.sh
 [fork]: https://help.github.com/en/github/getting-started-with-github/fork-a-repo
 [git]: src/git

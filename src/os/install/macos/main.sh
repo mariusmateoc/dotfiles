@@ -36,13 +36,4 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 ./bash_completions.sh
 ./web_font_tools.sh
 
-printf "\n"
-ask_for_confirmation "Install custom fonts?"
-
-if answer_is_yes; then
-
-    ./fonts.sh
-
-fi
-
 brew_cleanup
