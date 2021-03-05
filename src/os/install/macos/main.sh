@@ -18,39 +18,16 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 ./misc.sh
 ./misc_tools.sh
 
-printf "\n"
-ask_for_confirmation "Use Volta for Node.js and Global Packages? (n) will use nvm"
+# Volta and latest Node.js with frontend dependencies
+./../volta.sh
+./../volta_packages.sh
 
-if answer_is_yes; then
-    
-    ./../volta.sh
-    ./../volta_packages.sh
+# Latest stable python with pip
+./../pyenv.sh
+./../pip.sh
 
-else
-
-    ./../nvm.sh
-    ./../npm.sh
-
-fi
-
-printf "\n"
-ask_for_confirmation "Install/Update pyenv, pip, pipenv and install Python 3.8.2?"
-
-if answer_is_yes; then
-
-    ./../pyenv.sh
-    ./../pip.sh
-
-fi
-
-printf "\n"
-ask_for_confirmation "Install/Update rvm and install latest Ruby?"
-
-if answer_is_yes; then
-
-    ./../rvm.sh
-
-fi
+# Latest version of Ruby
+./../rvm.sh
 
 ./quick_look.sh
 ./tmux.sh
@@ -65,7 +42,7 @@ ask_for_confirmation "Install custom fonts?"
 if answer_is_yes; then
 
     ./fonts.sh
-    
+
 fi
 
 brew_cleanup
