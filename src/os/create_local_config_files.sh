@@ -16,6 +16,16 @@ create_bash_local() {
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+# When trying to use the bash+curl verifying method on a server, this
+# cryptic error message might happen:
+# gpg: signing failed: Inappropriate ioctl for device
+# Ref: https://github.com/keybase/keybase-issues/issues/2798
+
+export GPG_TTY=$(tty)
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 # Set PATH for custom functions
 # https://github.com/mariusmateoc/dotfiles/tree/master/src/bin
 
