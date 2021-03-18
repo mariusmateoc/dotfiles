@@ -50,4 +50,4 @@ alias lsd='ls -lF | grep "^d"'
 
 # Load OS specific aliases.
 
-. "aliases/$OS/bash_aliases"
+. "$OS/bash_aliases"
