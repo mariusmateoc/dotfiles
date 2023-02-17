@@ -37,12 +37,12 @@ install_latest_python() {
     # (this will also set it as the default).
     execute \
         ". $LOCAL_SHELL_CONFIG_FILE \
-            && pyenv install 3.9.2" \
-        "pyenv (Install Python 3.9.2)" \
+            && pyenv install 3.11.2" \
+        "pyenv (Install Python 3.11.2)" \
     && execute \
         ". $LOCAL_SHELL_CONFIG_FILE \
-            && pyenv global 3.9.2" \
-        "pyenv (Set Python 3.9.2 as global version)"
+            && pyenv global 3.11.2" \
+        "pyenv (Set Python 3.11.2 as global version)"
 }
 
 install_pyenv() {
