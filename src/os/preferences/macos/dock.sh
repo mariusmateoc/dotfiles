@@ -55,4 +55,10 @@ execute "defaults write com.apple.dock persistent-apps -array-add '{tile-data={}
         defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}'" \
     "Add spaces to the left side of the Dock (where the applications are)"
 
+execute "defaults write com.apple.dock wvous-bl-corner -int 0" \
+    "Disable bottom left hot corner"
+
+execute "defaults write com.apple.dock wvous-br-corner -int 0" \
+    "Disable bottom right hot corner"
+
 killall "Dock" &> /dev/null
