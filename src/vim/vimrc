@@ -73,6 +73,7 @@ set listchars+=eol:↴                " │ represent invisible characters.
 set listchars+=nbsp:_               " ┘
 
 set magic                           " Enable extended regexp.
+" set mouse+=a                        " Enable mouse support.
 set mousehide                       " Hide mouse pointer while typing.
 set noerrorbells                    " Disable error bells.
 
@@ -154,6 +155,8 @@ if has('windows')
     set winminheight=0              " Allow windows to be squashed.
 endif
 
+" Prevent `Q` in `normal` mode from entering `Ex` mode.
+nmap Q <Nop>
 
 " ----------------------------------------------------------------------
 " | Plugins                                                            |
@@ -177,10 +180,10 @@ function! InitPlugins() abort
     call minpac#add('godlygeek/tabular')
     call minpac#add('isRuslan/vim-es6')
     call minpac#add('jelera/vim-javascript-syntax')
-    call minpac#add('kien/ctrlp.vim')
+    call minpac#add('ctrlpvim/ctrlp.vim')
     call minpac#add('marijnh/tern_for_vim', { 'do': ':silent ! cd $HOME/.vim/pack/minpac/start/tern_for_vim && npm i &> /dev/null' })
     call minpac#add('mattn/emmet-vim')
-    call minpac#add('mattn/webapi-vim')
+    call minpac#add('mattn/webapi-vim', { 'type': 'opt' })
     call minpac#add('mhinz/vim-signify')
     call minpac#add('moll/vim-node')
     call minpac#add('mtscout6/syntastic-local-eslint.vim')
@@ -188,7 +191,7 @@ function! InitPlugins() abort
     call minpac#add('raimondi/delimitmate')
     call minpac#add('scrooloose/nerdtree')
     call minpac#add('scrooloose/syntastic')
-    call minpac#add('sheerun/vim-polyglot')
+    call minpac#add('sheerun/vim-polyglot', { 'type': 'opt' })
     call minpac#add('shougo/neocomplcache.vim')
     call minpac#add('shougo/neosnippet')
     call minpac#add('shougo/neosnippet-snippets')
@@ -203,30 +206,31 @@ function! InitPlugins() abort
 
 endfunction
 
+silent! packadd webapi-vim
+
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 " Define custom commands for managing plugins.
 
 command! PluginsClean   call InitPlugins() | call minpac#clean()
-command! PluginsSetup   call InitPlugins() | call minpac#update('', {'do': 'quit'})
+command! PluginsSetup   call InitPlugins() | call minpac#update('', { 'do': 'quit! | quit!' })
 command! PluginsStatus  call InitPlugins() | call minpac#status()
-command! PluginsUpdate  call InitPlugins() | call minpac#update('', {'do': 'call minpac#status()'})
+command! PluginsUpdate  call InitPlugins() | call minpac#update('', { 'do': 'call minpac#status() | quit! | quit!' })
 
 " ----------------------------------------------------------------------
 " | Plugins - Emmet                                                    |
 " ----------------------------------------------------------------------
 
-" Redefine trigger key for Emmet.
-" http://docs.emmet.io/cheat-sheet/
+" Redefine trigger key.
+let g:user_emmet_leader_key=","
 
-let g:user_emmet_leader_key="<C-E>"
+" Only enable normal mode functions.
+let g:user_emmet_mode='a'
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-" Load custom Emmet snippets.
-" http://docs.emmet.io/customization/snippets/
-
-if exists('webapi#json')
+" Load custom snippets.
+if &runtimepath =~ 'webapi-vim'
     let g:user_emmet_settings = webapi#json#decode(join(readfile(expand("~/.vim/snippets/emmet.json")), "\n"))
 endif
 
@@ -319,7 +323,7 @@ function! GetGitBranchName()
     let branchName = ""
 
     if exists("g:loaded_fugitive")
-        let branchName = "[" . fugitive#head() . "]"
+        let branchName = "[" . fugitive#Head() . "]"
     endif
 
     return branchName
@@ -338,6 +342,14 @@ function! PrettyPrint()
         norm! Vgq
     endif
 
+endfunction
+
+" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+function! StripBOM()
+    if has('multi_byte')
+        set nobomb
+    endif
 endfunction
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -378,6 +390,7 @@ function! ToggleLimits()
     " [81]
     "
     "   * general use
+    "     https://daniel.haxx.se/blog/2020/11/30/i-am-an-80-column-purist/
 
     if ( &colorcolumn == "73" )
         set colorcolumn+=51,81
@@ -423,6 +436,18 @@ if has("autocmd")
 
     " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+    " Correctly recognize files.
+
+    augroup correctly_recognize_files
+
+        autocmd!
+        autocmd BufEnter  gitconfig       :setlocal filetype=gitconfig
+        autocmd BufEnter .gitconfig.local :setlocal filetype=gitconfig
+
+    augroup END
+
+    " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     " Use relative line numbers.
     " http://jeffkreeftmeijer.com/2012/relative-line-numbers-in-vim-for-super-fast-movement/
 
@@ -463,23 +488,24 @@ if has("autocmd")
 
     " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    " Automatically strip the trailing
-    " whitespaces when files are saved.
+    " Automatically strip whitespaces when files are saved.
 
-    augroup strip_trailing_whitespaces
+    augroup strip_whitespaces
 
-        " List of file types for which the trailing whitespaces
+        " List of file types for which the whitespaces
         " should not be removed:
 
         let excludedFileTypes = []
 
         " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        " Only strip the trailing whitespaces if
-        " the file type is not in the excluded list.
+        " Only strip the whitespaces if the file type is not
+        " in the excluded list.
 
         autocmd!
-        autocmd BufWritePre * if index(excludedFileTypes, &ft) < 0 | :call StripTrailingWhitespaces()
+        autocmd BufWritePre * if index(excludedFileTypes, &ft) < 0 |
+            \ :call StripBOM() |
+            \ :call StripTrailingWhitespaces()
 
     augroup END
 
@@ -551,6 +577,12 @@ map <leader>gd :SignifyToggle<CR>
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+" [,h ] Show hex dump.
+
+nmap <leader>h :%!xxd<CR>
+
+" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 " [,l ] Toggle `set list`.
 
 nmap <leader>l :set list!<CR>
@@ -575,9 +607,9 @@ map <leader>rl :RainbowLevelsToggle<cr>
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-" [,sh] Show hex dump.
+" [,sb] Strip BOM (Byte Order Mark).
 
-nmap <leader>sh :%!xxd<CR>
+nmap <leader>sb :call StripBOM()<CR>
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -587,9 +619,9 @@ nmap <leader>sr :%s/\r//g<CR>
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-" [,ss] Strip trailing whitespace.
+" [,sw] Strip trailing whitespace.
 
-nmap <leader>ss :call StripTrailingWhitespaces()<CR>
+nmap <leader>sw :call StripTrailingWhitespaces()<CR>
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -690,7 +722,7 @@ set statusline+=\ (%P)\        " Percent through file
 
 " Example result:
 "
-"  [1] [master] [vim/vimrc][vim][unix:utf-8]            17,238/381 (59%)
+"  [1] [main] [vim/vimrc][vim][unix:utf-8]            17,238/381 (59%)
 
 
 " ----------------------------------------------------------------------
