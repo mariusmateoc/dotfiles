@@ -50,9 +50,9 @@ execute "defaults write com.apple.dock showhidden -bool true" \
 execute "defaults write com.apple.dock tilesize -int 60" \
     "Set icon size"
 
-execute "defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}' && \
-        defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}' && \
-        defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}'" \
+execute "defaults write com.apple.dock persistent-apps -array-add '{"tile-type"="spacer-tile";}' && \
+        defaults write com.apple.dock persistent-apps -array-add '{"tile-type"="spacer-tile";}' && \
+        defaults write com.apple.dock persistent-apps -array-add '{"tile-type"="spacer-tile";}'" \
     "Add spaces to the left side of the Dock (where the applications are)"
 
 execute "defaults write com.apple.dock wvous-bl-corner -int 0" \

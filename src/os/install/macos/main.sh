@@ -17,6 +17,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 ./image_tools.sh
 ./misc.sh
 ./misc_tools.sh
+./vscode.sh
 
 # Volta and latest Node.js with frontend dependencies
 ./../volta.sh

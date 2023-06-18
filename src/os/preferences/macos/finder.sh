@@ -29,39 +29,33 @@ execute "defaults write com.apple.finder FXInfoPanesExpanded -dict \
             OpenWith -bool true" \
     "Expand General and Open With file info panes by default"
 
-execute "defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false" \
-    "Disable warning when changing a file extension"
-
 execute "defaults write com.apple.finder FXPreferredViewStyle -string 'Nlsv' && \
-         defaults write com.apple.finder CustomViewStyle -string 'Nlsv'" \
+         defaults write com.apple.finder FK_DefaultViewStyle -string 'Nlsv'" \
     "Use list view in all Finder windows by default"
 
-execute "defaults write com.apple.finder QLEnableTextSelection -bool true" \
+execute "defaults write -g QLEnableTextSelection -bool true" \
     "Allow text selection in the Quick Look window"
 
 execute "defaults write com.apple.finder ShowStatusBar -bool true" \
     "Show status bar"
 
-execute "defaults write com.apple.finder NewWindowTarget -string 'PfLo' && \
+execute "defaults write com.apple.finder NewWindowTarget -string 'PfHm' && \
          defaults write com.apple.finder NewWindowTargetPath -string 'file://$HOME/'" \
     "Set $HOME as the default location for new Finder windows"
-
-execute "defaults write com.apple.finder ShowRecentTags -bool false" \
-    "Do not show recent tags"
 
 execute "defaults write -g AppleShowAllExtensions -bool true" \
     "Show all filename extensions"
 
-execute "/usr/libexec/PlistBuddy -c 'Set :StandardViewSettings:ExtendedListViewSettingsV2:iconSize 32' ~/Library/Preferences/com.apple.finder.plist && \
-         /usr/libexec/PlistBuddy -c 'Set :StandardViewSettings:ListViewSettings:iconSize 32' ~/Library/Preferences/com.apple.finder.plist" \
+execute "defaults write com.apple.finder ListViewIconSize -int 32 && \
+         defaults write com.apple.finder ExtendedListViewIconSize -int 32" \
     "Set icon size"
 
-execute "/usr/libexec/PlistBuddy -c 'Set :StandardViewSettings:ExtendedListViewSettingsV2:textSize 13' ~/Library/Preferences/com.apple.finder.plist && \
-         /usr/libexec/PlistBuddy -c 'Set :StandardViewSettings:ListViewSettings:textSize 13' ~/Library/Preferences/com.apple.finder.plist" \
+execute "defaults write com.apple.finder ListViewFontSize -int 13 && \
+         defaults write com.apple.finder ExtendedListViewFontSize -int 13" \
     "Set icon label text size"
 
-execute "/usr/libexec/PlistBuddy -c 'Set :StandardViewSettings:ExtendedListViewSettingsV2:sortColumn dateAdded' ~/Library/Preferences/com.apple.finder.plist && \
-         /usr/libexec/PlistBuddy -c 'Set :StandardViewSettings:ListViewSettings:sortColumn dateAdded' ~/Library/Preferences/com.apple.finder.plist" \
+execute "defaults write com.apple.finder StandardViewSettings -dict-sortColumn DateAdded -dict-sortDirection descending && \
+         defaults write com.apple.finder ExtendedListViewSettings -dict-sortColumn DateAdded -dict-sortDirection descending" \
     "Set sort by date added"
 
 killall "Finder" &> /dev/null
