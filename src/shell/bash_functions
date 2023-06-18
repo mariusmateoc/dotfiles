@@ -159,7 +159,7 @@ extract() {
         *.tgz) tar xzf "$fullpath" ;;
         *.txz) tar Jxvf "$fullpath" ;;
         *.zip) unzip "$fullpath" ;;
-        *.rar) unrar e "$fullpath" ;;
+        *.rar) unar e "$fullpath" ;;
         *) echo "'$1' cannot be extracted via extract()" && cd .. && ! $didfolderexist && rm -r "$foldername" ;;
         esac
     else
