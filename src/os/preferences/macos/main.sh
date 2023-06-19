@@ -25,4 +25,5 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 ./textedit.sh
 ./trackpad.sh
 ./transmission.sh
+./rectangle.sh
 ./ui_and_ux.sh
