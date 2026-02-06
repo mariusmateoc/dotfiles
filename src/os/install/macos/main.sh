@@ -19,9 +19,9 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 ./misc_tools.sh
 ./vscode.sh
 
-# Volta and latest Node.js with frontend dependencies
-./../volta.sh
-./../volta_packages.sh
+# mise and latest Node.js with frontend dependencies
+./../mise.sh
+./../mise_packages.sh
 
 # Latest stable python with pip
 ./../pyenv.sh
