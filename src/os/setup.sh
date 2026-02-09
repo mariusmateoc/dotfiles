@@ -1,14 +1,14 @@
 #!/bin/bash
 
-declare -r GITHUB_REPOSITORY="mariusmateoc/dotfiles"
+declare -r GITHUB_REPOSITORY="alrra/dotfiles"
 
 declare -r DOTFILES_ORIGIN="git@github.com:$GITHUB_REPOSITORY.git"
-declare -r DOTFILES_TARBALL_URL="https://github.com/$GITHUB_REPOSITORY/tarball/master"
-declare -r DOTFILES_UTILS_URL="https://raw.githubusercontent.com/$GITHUB_REPOSITORY/master/src/os/utils.sh"
+declare -r DOTFILES_TARBALL_URL="https://github.com/$GITHUB_REPOSITORY/tarball/main"
+declare -r DOTFILES_UTILS_URL="https://raw.githubusercontent.com/$GITHUB_REPOSITORY/main/src/os/utils.sh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-declare dotfilesDirectory="$HOME/Projects/dotfiles"
+declare dotfilesDirectory="$HOME/projects/dotfiles"
 declare skipQuestions=false
 
 # ----------------------------------------------------------------------
@@ -22,19 +22,23 @@ download() {
 
     if command -v "curl" &> /dev/null; then
 
-        curl -LsSo "$output" "$url" &> /dev/null
-        #     │││└─ write output to file
-        #     ││└─ show error messages
-        #     │└─ don't show the progress meter
-        #     └─ follow redirects
+        curl \
+            --location \
+            --silent \
+            --show-error \
+            --output "$output" \
+            "$url" \
+                &> /dev/null
 
         return $?
 
     elif command -v "wget" &> /dev/null; then
 
-        wget -qO "$output" "$url" &> /dev/null
-        #     │└─ write output to file
-        #     └─ don't show output
+        wget \
+            --quiet \
+            --output-document="$output" \
+            "$url" \
+                &> /dev/null
 
         return $?
     fi
@@ -138,7 +142,14 @@ extract() {
     local outputDir="$2"
 
     if command -v "tar" &> /dev/null; then
-        tar -zxf "$archive" --strip-components 1 -C "$outputDir"
+
+        tar \
+            --extract \
+            --gzip \
+            --file "$archive" \
+            --strip-components 1 \
+            --directory "$outputDir"
+
         return $?
     fi
 
@@ -148,8 +159,8 @@ extract() {
 
 verify_os() {
 
-    declare -r MINIMUM_MACOS_VERSION="10.10"
-    declare -r MINIMUM_UBUNTU_VERSION="18.04"
+    declare -r MINIMUM_MACOS_VERSION="10.14"
+    declare -r MINIMUM_UBUNTU_VERSION="24.04"
 
     local os_name="$(get_os)"
     local os_version="$(get_os_version)"
@@ -252,7 +263,7 @@ main() {
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    ./install/main.sh
+    ./installs/main.sh
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

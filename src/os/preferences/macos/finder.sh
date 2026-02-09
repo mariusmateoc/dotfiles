@@ -51,7 +51,9 @@ execute "defaults write com.apple.finder ListViewIconSize -int 32 && \
     "Set icon size"
 
 execute "defaults write com.apple.finder ListViewFontSize -int 13 && \
-         defaults write com.apple.finder ExtendedListViewFontSize -int 13" \
+         defaults write com.apple.finder ExtendedListViewFontSize -int 13 && \
+         /usr/libexec/PlistBuddy -c 'Set :DesktopViewSettings:IconViewSettings:textSize 13' ~/Library/Preferences/com.apple.finder.plist && \
+         /usr/libexec/PlistBuddy -c 'Set :StandardViewSettings:IconViewSettings:textSize 13' ~/Library/Preferences/com.apple.finder.plist" \
     "Set icon label text size"
 
 execute "defaults write com.apple.finder StandardViewSettings -dict-sortColumn DateAdded -dict-sortDirection descending && \

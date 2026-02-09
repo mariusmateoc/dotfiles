@@ -6,7 +6,6 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-print_in_purple "\n   Image Tools\n\n"
+print_in_purple "\n   Miscellaneous\n\n"
 
-brew_install "ImageMagick" "imagemagick"
-brew_install "ImageOptim" "imageoptim" "--cask"
+install_package "VLC" "vlc"

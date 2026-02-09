@@ -82,21 +82,6 @@ delete-files() {
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-# Copy template for design project in projects directory
-
-design() {
-    NORMAL=`echo "\033[m"`
-    RED_TEXT=`echo "\033[31m"`
-
-    if [ -z "$2" ]; then
-        cp_p ~/Dropbox/Resources/Templates/Design/ ~/Dropbox/Work/Projects/"$1"
-    else
-        echo -e "${RED_TEXT}ATTENTION: ${NORMAL}Provide only the project name as single argument."
-    fi
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # All the dig info
 
 digga() {
@@ -216,55 +201,6 @@ gz() {
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-# Human readable file size
-# (because `du -h` doesn't cut it for me).
-
-hrfs() {
-
-    printf "%s" "$1" |
-    awk '{
-            i = 1;
-            split("B KB MB GB TB PB EB ZB YB WTFB", v);
-            value = $1;
-
-            # confirm that the input is a number
-            if ( value + .0 == value ) {
-
-                while ( value >= 1024 ) {
-                    value/=1024;
-                    i++;
-                }
-
-                if ( value == int(value) ) {
-                    printf "%d %s", value, v[i]
-                } else {
-                    printf "%.1f %s", value, v[i]
-                }
-
-            }
-        }' |
-    sed -e ":l" \
-        -e "s/\([0-9]\)\([0-9]\{3\}\)/\1,\2/; t l"
-    #    └─ add thousands separator
-    #       (changes "1023.2 KB" to "1,023.2 KB")
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-# Syntax-highlight JSON strings or files
-
-json() {
-    if [ -p /dev/stdin ]; then
-        # piping, e.g. `echo '{"foo":42}' | json`
-        python -mjson.tool | pygmentize -l javascript
-    else
-        # e.g. `json '{"foo":42}'`
-        python -mjson.tool <<< "$*" | pygmentize -l javascript
-    fi
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # Create new directories and enter the first one.
 
 mkd() {
@@ -281,66 +217,133 @@ mkd() {
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-# Process phone photo.
+# Optimize PDF files.
+#
+# Usage examples:
+#
+#   optimize-pdfs path/to/some/directory path/to/some/file ...
 
-ppp() {
+optimize-pdfs() (
 
-    # Check if ImageMagick's convert command-line tool is installed.
+    # Check if the pdfcpu command-line tool is installed.
 
-    if ! command -v "convert" $> /dev/null; then
-        printf "Please install ImageMagick's 'convert' command-line tool!"
-        exit;
+    if ! command -v "pdfcpu" &> /dev/null; then
+        printf "\n%s\n\n" "pdfcpu command-line tool is not installed!"
+        exit
     fi
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    declare option="$1"
-    declare photo="${2:-*.jpg}"
-    declare geometry="${3:-50%}"
+    get-file-size() (
+        printf "%s" "$(wc -c < "$1")"
+    )
 
-    if [ "$option" != "clean" ] &&
-       [ "$option" != "resize" ]; then
-        option="resize"
-        photo="${1:-*.jpg}"
-        geometry="${2:-50%}"
-    fi
+    optimize-pdf() (
+        local filePath="$(dirname "${1%/}")"
+        local fileName="_$(printf "%s" "$(basename "$1")" | tr '[:upper:]' '[:lower:]')"
 
-    if [[ "$(echo "${photo##*.}" | tr '[:upper:]' '[:lower:]')" != "png" ]]; then
-        newPhotoName="${photo%.*}.png"
-    else
-        newPhotoName="_${photo%.*}.png"
-    fi
+        local optimizedFilePath="$filePath/$fileName"
 
-    if [ "$option" == "resize" ]; then
-        convert "$photo" \
-            -colorspace RGB \
-            +sigmoidal-contrast 11.6933 \
-            -define filter:filter=Sinc \
-            -define filter:window=Jinc \
-            -define filter:lobes=3 \
-            -sigmoidal-contrast 11.6933 \
-            -colorspace sRGB \
-            -background transparent \
-            -gravity center \
-            -resize "$geometry" \
-            +append \
-            "$newPhotoName" \
-        && printf "* %s (%s)\n" \
-            "$newPhotoName" \
-            "$geometry"
+        printf "* %s\n" "$1"
 
+        pdfcpu optimize "$1" "$optimizedFilePath" &> /dev/null
+        local exitCode=$?
+
+        # If something went wrong (i.e. pdfcpu didn't create
+        # the optimized file or exited with a non-zero status)
+        # or the size of the optimized file is bigger than the
+        # original file, keep the original file.
+
+        if [ ! -f "$optimizedFilePath" ]; then
+            return
+        fi
+
+        if [ $exitCode -ne 0 ] || \
+           [ "$(get-file-size "$1")" -le "$(get-file-size "$optimizedFilePath")" ];
+        then
+            rm -rf "$optimizedFilePath"
+            return
+        fi
+
+        # Otherwise, replace the original file with the optimized one.
+
+        mv -f "$optimizedFilePath" "$1" 1> /dev/null
+    )
+
+    #                     ┌─ Default to the current directory.
+    for filePath in "${@:-.}"; do
+        if [ -d "$filePath" ]; then
+            find "${filePath%/}" \
+                -depth 1 \
+                -name \*.pdf \
+                -print \
+                -type f \
+            | while read -r file; do
+                 optimize-pdf "$file"
+              done
+        elif [ -f "$filePath" ]; then
+             optimize-pdf "$filePath"
+        fi
+    done
+)
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Resize image.
+#
+# Create a new image based on the specified image resized by the
+# specified amount.
+#
+# $1: Path to the original image.
+# $2: Resize value (default is '50%').
+#     See also: https://imagemagick.org/script/command-line-processing.php#geometry
+#
+# Usage examples:
+#
+#   * resize-image ./path/to/image.jpg 30%
+#   * resize-image ./path/to/image.jpg 1000x1000!
+
+resize-image() {
+
+    # Check if ImageMagick's `magick` command-line tool is installed.
+
+    if ! command -v "magick" &> /dev/null; then
+        printf "ImageMagick's 'magick' command-line tool is not installed!\n"
         return
     fi
 
-    convert "$photo" \
-        -morphology Convolve DoG:10,10,0 \
-        -negate \
-        -normalize \
-        -blur 0x1 \
-        -channel RBG \
-        -level 10%,91%,0.1 \
-        "$newPhotoName" \
-        && printf "* %s\n" "$newPhotoName"
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    # Check if the file is an image file.
+
+    if [ "$(file --mime-type --brief "$1" | cut -d'/' -f1)" != "image" ]; then
+        printf "'%s' is not an image file.\n" "$1"
+        return
+    fi
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    declare path="$(dirname "$1")"
+    declare fileName="$(basename "$1")"
+    declare geometry="${2:-50%}"
+
+    magick \
+        "$1" \
+        -colorspace RGB \
+        +sigmoidal-contrast 11.6933 \
+        -define filter:filter=Sinc \
+        -define filter:window=Jinc \
+        -define filter:lobes=3 \
+        -sigmoidal-contrast 11.6933 \
+        -colorspace sRGB \
+        -background transparent \
+        -gravity center \
+        -resize "$geometry" \
+        +append \
+        "$path/_$fileName" \
+    && printf "* %s (%s)\n" \
+            "$path/_$fileName" \
+            "$geometry"
 
 }
 
@@ -362,7 +365,13 @@ qh() {
 # Search for text within the current directory.
 
 qt() {
-    grep -ir --color=always "$*" --exclude-dir=".git" --exclude-dir="node_modules" . | less -RX
-    #     │└─ search all files under each directory, recursively
-    #     └─ ignore case
+    grep --color=always "$*" \
+         --exclude-dir=".git" \
+         --exclude-dir="node_modules" \
+         --ignore-case \
+         --recursive \
+         . \
+        | less --no-init --raw-control-chars
+          #    │         └─ Display ANSI color escape sequences in raw form.
+          #    └─ Don't clear the screen after quitting less.
 }

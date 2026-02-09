@@ -4,7 +4,7 @@
 
 # Lock screen.
 
-alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
+alias afk="osascript -e 'tell application \"System Events\" to sleep'"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -14,16 +14,15 @@ alias brewd="brew doctor"
 alias brewi="brew install"
 alias brewr="brew uninstall"
 alias brews="brew search"
-alias brewu="brew update \
+alias brewu="brew update --quiet \
                 && brew upgrade \
                 && brew cleanup"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-# `cat` with beautiful colors. requires Pygments installed.
-# sudo easy_install -U Pygments
+# `cat` with beautiful colors.
 
-alias c='pygmentize -O style=monokai -f console256 -g'
+alias cat='bat --paging=never --style=plain'
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -44,7 +43,7 @@ alias clear-dns-cache="sudo dscacheutil -flushcache; \
 
 # Recursively delete `.DS_Store` files
 
-alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
+alias cleanup="fd . -type f -name '*.DS_Store' -ls -delete"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

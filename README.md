@@ -1,5 +1,8 @@
-[Marius Mateoc][repo]’s Dotfiles
+Marius Mateoc Dotfiles
 ==========================
+
+> [!NOTE]
+> Thanks to [Cătălin Mariș](https://github.com/alrra/dotfiles) for this.
 
 These are the base dotfiles that I start with when I set up a new
 environment. For more specific local needs I use the `*.local` files
@@ -8,7 +11,7 @@ described in the [`Local Settings`](#local-settings) section.
 Table of Contents
 -----------------
 
-- [Marius Mateoc’s Dotfiles](#marius-mateocs-dotfiles)
+- [Marius Mateoc’s Dotfiles](#marius-mateoc-dotfiles)
   - [Table of Contents](#table-of-contents)
   - [Setup](#setup)
   - [Customize](#customize)
@@ -19,15 +22,15 @@ Table of Contents
       - [`~/.vimrc.local`](#vimrclocal)
     - [Forks](#forks)
   - [Update](#update)
-  - [License](#license)
 
 Setup
 -----
 
 To set up the `dotfiles` run the appropriate snippet in the terminal:
 
-(:warning: **DO NOT** run the `setup` snippet if you do not fully understand
-[what it does][setup]. Seriously, **DON'T**!)
+> [!CAUTION]
+> :warning: **DO NOT** run the `setup` snippet if you do not fully understand
+[what it does][setup]. Seriously, **DON'T**!
 
 | OS | Snippet |
 |:---|:---|
@@ -45,7 +48,7 @@ The setup process will:
   [`macOS`][install macos] / [`Ubuntu`][install ubuntu].
 - Set custom [`macOS`][preferences macos] /
   [`Ubuntu`][preferences ubuntu] preferences.
-- Install [`vim` plugins][vim plugins].
+- Install [`vim plugins`][vim plugins].
 
 Customize
 ---------
@@ -132,9 +135,9 @@ my username with your own in the [`setup` snippets](#setup) and
 Update
 ------
 
-To update the dotfiles you can either run the [`setup` script][setup]
+To update the dotfiles you can either run the [`setup script`][setup]
 or, if you want to update one particular part, run the appropriate
-[`os` script](src/os).
+[`os script`](src/os).
 
 License
 -------
@@ -145,12 +148,12 @@ The code is available under the [MIT license][license].
 [dirs]: src/os/create_directories.sh
 [fork]: https://help.github.com/en/github/getting-started-with-github/fork-a-repo
 [git]: src/git
-[install macos]: src/os/install/macos
-[install ubuntu]: src/os/install/ubuntu
+[install macos]: src/os/installs/macos
+[install ubuntu]: src/os/installs/ubuntu
 [license]: LICENSE.txt
 [preferences macos]: src/os/preferences/macos
 [preferences ubuntu]: src/os/preferences/ubuntu
-[repo]: https://github.com/mariusmateoc
+[repo]: https://github.com/mariusmateoc/dotfiles
 [setup script]: https://github.com/mariusmateoc/dotfiles/blob/2f53485df6be75d207d4c5c03c265730b416555a/src/os/setup.sh#L3
 [setup]: src/os/setup.sh
 [shell]: src/shell

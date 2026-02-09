@@ -9,7 +9,11 @@ declare -r PYENV_GIT_REPO_URL="https://github.com/pyenv/pyenv.git"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-add_pyenv_configs() {
+add_configs() {
+    # Check if the configs need to be added.
+    if command -v pyenv &> /dev/null; then
+        return
+    fi
 
     declare -r CONFIGS="
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -22,13 +26,7 @@ eval \"\$(pyenv init -)\"
 
 "
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    execute \
-        "printf '%s' '$CONFIGS' >> $LOCAL_SHELL_CONFIG_FILE \
-            && . $LOCAL_SHELL_CONFIG_FILE" \
-        "pyenv (update $LOCAL_SHELL_CONFIG_FILE)"
-
+    update_local_shell_configs "$CONFIGS"
 }
 
 install_latest_python() {
@@ -37,12 +35,12 @@ install_latest_python() {
     # (this will also set it as the default).
     execute \
         ". $LOCAL_SHELL_CONFIG_FILE \
-            && pyenv install 3.11.2" \
-        "pyenv (Install Python 3.11.2)" \
+            && pyenv install 3.13.12" \
+        "pyenv (Install Python 3.13.12)" \
     && execute \
         ". $LOCAL_SHELL_CONFIG_FILE \
-            && pyenv global 3.11.2" \
-        "pyenv (Set Python 3.11.2 as global version)"
+            && pyenv global 3.13.12" \
+        "pyenv (Set Python 3.13.12 as global version)"
 }
 
 install_pyenv() {
@@ -52,7 +50,7 @@ install_pyenv() {
     execute \
         "git clone --quiet $PYENV_GIT_REPO_URL $PYENV_DIRECTORY" \
         "pyenv (install)" \
-    && add_pyenv_configs
+    && add_configs
 }
 
 update_pyenv() {
@@ -67,7 +65,7 @@ update_pyenv() {
 
 main() {
 
-    print_in_purple "\n   Pyenv, Python and Pip Packages \n\n"
+    print_in_purple "\n   Pyenv and Python \n\n"
 
     if [ ! -d "$PYENV_DIRECTORY" ]; then
         install_pyenv

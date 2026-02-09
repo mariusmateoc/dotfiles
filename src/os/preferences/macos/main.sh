@@ -4,12 +4,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-# Close any open `System Preferences` panes in order to
-# avoid overriding the preferences that are being changed.
-
-./close_system_preferences_panes.applescript
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+./init.sh
 
 ./app_store.sh
 ./chrome.sh
@@ -21,9 +16,9 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 ./maps.sh
 ./photos.sh
 ./safari.sh
+./security_and_privacy.sh
 ./terminal.sh
 ./textedit.sh
 ./trackpad.sh
-./transmission.sh
 ./rectangle.sh
 ./ui_and_ux.sh

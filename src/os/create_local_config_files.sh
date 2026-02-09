@@ -11,8 +11,12 @@ create_bash_local() {
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    declare -r CONFIGS="
-#!/bin/bash
+   if [ ! -e "$FILE_PATH" ] || [ -z "$FILE_PATH" ]; then
+
+        DOTFILES_BIN_DIR="$(dirname "$(pwd)")/bin/"
+
+        printf "%s\n" \
+"#!/bin/bash
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -26,19 +30,13 @@ export GPG_TTY=$(tty)
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-# Set PATH for custom functions
-# https://github.com/mariusmateoc/dotfiles/tree/master/src/bin
+# Set PATH additions.
 
-PATH=\"\$PATH:\$HOME/projects/dotfiles/src/bin\"
+PATH=\"$DOTFILES_BIN_DIR:\$PATH\"
 
-export PATH
-"
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    if [ ! -e "$FILE_PATH" ] || [ -z "$FILE_PATH" ]; then
-        printf "%s\n" "$CONFIGS" >> "$FILE_PATH"
-    fi
+export PATH" \
+        >> "$FILE_PATH"
+   fi
 
     print_result $? "$FILE_PATH"
 

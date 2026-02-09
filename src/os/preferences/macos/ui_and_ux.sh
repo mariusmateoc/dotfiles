@@ -17,14 +17,17 @@ execute "defaults write com.apple.menuextra.battery ShowPercent -string 'NO'" \
 execute "sudo defaults write /Library/Preferences/com.apple.loginwindow showInputMenu -bool true" \
     "Show language menu in the top right corner of the boot screen"
 
+execute "defaults write com.apple.CrashReporter UseUNC 1" \
+    "Make crash reports appear as notifications"
+
 execute "defaults write com.apple.LaunchServices LSQuarantine -bool false" \
     "Disable 'Are you sure you want to open this application?' dialog"
 
 execute "defaults write com.apple.screencapture disable-shadow -bool true" \
     "Disable shadow in screenshots"
 
-execute "defaults write com.apple.screencapture location -string '$HOME/Downloads/screenshots'" \
-    "Save screenshots in the Downloads/screenshots"
+execute "defaults write com.apple.screencapture location -string '$HOME/Desktop'" \
+    "Save screenshots to the Desktop"
 
 execute "defaults write com.apple.screencapture show-thumbnail -bool false" \
     "Do not show thumbnail"
@@ -66,7 +69,7 @@ execute "defaults write -g PMPrintingExpandedStateForPrint -bool true" \
 execute "defaults write -g QLPanelAnimationDuration -float 0" \
     "Disable opening a Quick Look window animations."
 
-execute "defaults write -g NSQuitAlwaysKeepsWindows -bool false" \
+execute "defaults write com.apple.systempreferences NSQuitAlwaysKeepsWindows -bool false" \
     "Disable resume system-wide"
 
 execute "defaults write -g NSDocumentSaveNewDocumentsToCloud -bool false" \
