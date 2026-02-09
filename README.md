@@ -6,7 +6,7 @@ Marius Mateoc Dotfiles
 
 These are the base dotfiles that I start with when I set up a new
 environment. For more specific local needs I use the `*.local` files
-described in the [`Local Settings`](#local-settings) section.
+described in the [`Local Settings`](#local-settings) section..
 
 Table of Contents
 -----------------
@@ -34,8 +34,8 @@ To set up the `dotfiles` run the appropriate snippet in the terminal:
 
 | OS | Snippet |
 |:---|:---|
-| `macOS` | `bash -c "$(curl -LsS https://raw.github.com/mariusmateoc/dotfiles/master/src/os/setup.sh)"` |
-| `Ubuntu` | `bash -c "$(wget -qO - https://raw.github.com/mariusmateoc/dotfiles/master/src/os/setup.sh)"` |
+| `macOS` | `bash -c "$(curl -LsS https://raw.github.com/mariusmateoc/dotfiles/main/src/os/setup.sh)"` |
+| `Ubuntu` | `bash -c "$(wget -qO - https://raw.github.com/mariusmateoc/dotfiles/main/src/os/setup.sh)"` |
 
 The setup process will:
 
